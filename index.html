@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>💋 Kiss Day Surprise 💋</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 25%, #fff0f5 50%, #ffe4e1 75%, #ffeef8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating Hearts Background */
+        .floating-heart {
+            position: fixed;
+            font-size: 25px;
+            animation: floatHeart 12s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container - mobile first, centered content */
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container > header,
+        .container > .scene,
+        .container > .game-area,
+        .container > .meter-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        @media (min-width: 769px) {
+            .container {
+                padding: 20px;
+            }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin: 24px 0;
+            animation: fadeInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.75rem, 8vw, 5rem);
+            color: #c71585;
+            text-shadow: 2px 2px 8px rgba(255, 105, 180, 0.35);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: clamp(0.95rem, 3vw, 1.5rem);
+            color: #ff1493;
+            font-weight: 500;
+        }
+
+        /* 3D Love Letter */
+        .scene {
+            perspective: 1000px;
+            position: relative;
+            touch-action: none;
+        }
+
+        .love-letter {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .letter-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffe4e9 0%, #ffd6e0 100%);
+            border: 3px solid #ffb6c1;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff1493;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            backface-visibility: hidden;
+        }
+
+        .letter-front {
+            transform: translateZ(50px);
+        }
+
+        .letter-back {
+            transform: rotateY(180deg) translateZ(50px);
+        }
+
+        .letter-right {
+            width: 100px;
+            transform: rotateY(90deg) translateZ(250px);
+            background: linear-gradient(135deg, #ffd6e0 0%, #ffc0cb 100%);
+        }
+
+        .letter-left {
+            width: 100px;
+            transform: rotateY(-90deg) translateZ(50px);
+            background: linear-gradient(135deg, #ffd6e0 0%, #ffc0cb 100%);
+        }
+
+        .letter-top {
+            height: 100px;
+            transform: rotateX(90deg) translateZ(250px);
+            background: linear-gradient(135deg, #ffe4e9 0%, #ffd6e0 100%);
+        }
+
+        .letter-bottom {
+            height: 100px;
+            transform: rotateX(-90deg) translateZ(50px);
+            background: linear-gradient(135deg, #ffe4e9 0%, #ffd6e0 100%);
+        }
+
+        /* Catch the Kiss Game - centered */
+        .game-area {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 24px;
+            border: 3px dashed #ffb6c1;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.25);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .game-instructions {
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            font-size: 1.3rem;
+            color: #ff1493;
+            font-weight: 500;
+            text-align: center;
+            padding: 0 16px;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 5;
+            box-sizing: border-box;
+        }
+
+        .game-instructions .instruction-line {
+            display: block;
+            width: 100%;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+
+        .kiss-lips {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            filter: drop-shadow(0 5px 15px rgba(255, 105, 180, 0.5));
+            z-index: 10;
+            animation: wobble 1.5s infinite;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .kiss-lips:hover,
+        .kiss-lips:focus {
+            transform: scale(1.15);
+            animation: none;
+            outline: none;
+        }
+
+        /* Kiss Meter - centered */
+        .meter-container {
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .meter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        .meter-wrapper {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 3px solid #ffb6c1;
+            box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+            transition: width 0.12s ease-out;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .meter-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff1493;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            z-index: 2;
+        }
+
+        .charge-button {
+            margin-top: 30px;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .charge-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .charge-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .charge-button:active {
+            transform: scale(0.95);
+        }
+
+        .meter-container.meter-locked .charge-button {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .meter-container.meter-locked .meter-wrapper {
+            opacity: 0.7;
+        }
+
+        .charge-button.charging {
+            animation: buttonShake 0.2s infinite;
+        }
+
+        @keyframes buttonShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        body.charging {
+            animation: screenShake 0.15s infinite;
+        }
+
+        @keyframes screenShake {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-3px, 3px); }
+            50% { transform: translate(3px, -3px); }
+            75% { transform: translate(-3px, -3px); }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #ff69b4;
+            animation: confettiFall 3s ease-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Grand Finale Overlay - shown via .finale-open class */
+        .finale-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.95), rgba(255, 20, 147, 0.95));
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        .finale-overlay.finale-open {
+            display: flex;
+            animation: fadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .finale-content {
+            text-align: center;
+            color: #fff;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .finale-content h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 30px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .finale-content p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .finale-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            margin-bottom: 32px;
+        }
+
+        .redeem-button {
+            padding: 25px 70px;
+            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            background: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .redeem-button:hover {
+            transform: scale(1.08) translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .play-again-button {
+            display: inline-block;
+            margin-top: 0;
+            padding: 14px 36px;
+            min-height: 48px;
+            min-width: 160px;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #ff1493;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 10;
+        }
+
+        .play-again-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+        }
+
+        .finale-buttons-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .finale-buttons-wrap .redeem-button,
+        .finale-buttons-wrap .play-again-button {
+            margin-top: 0;
+        }
+
+        /* Heart Rain */
+        .heart-rain {
+            position: fixed;
+            font-size: 30px;
+            animation: heartFall 4s linear forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Mobile-first: base = small screens */
+        .scene {
+            width: 180px;
+            height: 180px;
+            margin: 24px auto;
+        }
+
+        .letter-face {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+        }
+
+        .game-area {
+            height: 280px;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .game-instructions {
+            font-size: clamp(0.95rem, 2.5vw, 1.3rem);
+        }
+
+        .game-instructions .instruction-sub {
+            display: block;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            margin-top: 4px;
+        }
+
+        .kiss-lips {
+            width: 50px;
+            height: 50px;
+        }
+
+        .meter-container {
+            margin-top: 32px;
+            margin-bottom: 32px;
+            padding: 0 8px;
+        }
+
+        .meter-title {
+            font-size: clamp(1.4rem, 4vw, 2rem);
+        }
+
+        .meter-text {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+        }
+
+        .charge-button {
+            padding: 16px 32px;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+        }
+
+        .finale-content {
+            padding: 24px 16px;
+        }
+
+        .finale-content h2 {
+            font-size: clamp(1.8rem, 6vw, 4rem);
+        }
+
+        .finale-content p {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+        }
+
+        .redeem-button {
+            padding: 18px 40px;
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+        }
+
+        /* Tablet and up */
+        @media (min-width: 481px) {
+            .scene {
+                width: 220px;
+                height: 220px;
+                margin: 32px auto;
+            }
+
+            .game-area {
+                height: 350px;
+                margin-top: 32px;
+                margin-bottom: 32px;
+            }
+
+            .kiss-lips {
+                width: 55px;
+                height: 55px;
+            }
+
+            .meter-container {
+                margin-top: 48px;
+                margin-bottom: 48px;
+            }
+
+            .charge-button {
+                padding: 18px 48px;
+            }
+
+            .finale-content {
+                padding: 32px 24px;
+            }
+
+            .redeem-button {
+                padding: 22px 56px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 769px) {
+            header {
+                margin: 48px 0;
+            }
+
+            .scene {
+                width: 300px;
+                height: 300px;
+                margin: 40px auto;
+            }
+
+            .game-area {
+                height: 450px;
+                margin: 40px auto;
+            }
+
+            .kiss-lips {
+                width: 70px;
+                height: 70px;
+            }
+
+            .meter-container {
+                margin-top: 60px;
+                margin-bottom: 60px;
+            }
+
+            .charge-button {
+                padding: 20px 60px;
+            }
+
+            .finale-content {
+                padding: 40px;
+                max-width: 600px;
+            }
+
+            .redeem-button {
+                padding: 25px 70px;
+            }
+        }
+
+        .redeem-modal-inner {
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Smooth close for Got it! modal */
+        #redeem-modal-overlay {
+            transition: opacity 0.35s ease;
+        }
+
+        #redeem-modal-overlay.redeem-modal-closing {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #redeem-modal-overlay.redeem-modal-closing .redeem-modal-inner {
+            transform: scale(0.96);
+            opacity: 0;
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!--
+      Flow: 1) This screen = Catch the kiss (game area). 2) After catching = charge meter to 100%.
+      3) Finale overlay = "You did it!" + Redeem / Play again. 4) Redeem = "Got it!" modal to close.
+    -->
+    <!-- Floating Hearts Container -->
+    <div class="hearts-container"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>💋 Happy Kiss Day, My Love! 💋</h1>
+            <p class="subtitle">Get ready for a playful surprise...</p>
+        </header>
+
+        <!-- 3D Love Letter -->
+        <div class="scene">
+            <div class="love-letter" id="loveLetter">
+                <div class="letter-face letter-front">💌<br>For You</div>
+                <div class="letter-face letter-back">💖<br>XOXO</div>
+                <div class="letter-face letter-right"></div>
+                <div class="letter-face letter-left"></div>
+                <div class="letter-face letter-top"></div>
+                <div class="letter-face letter-bottom"></div>
+            </div>
+        </div>
+
+        <!-- Catch the Kiss Game -->
+        <div class="game-area" id="gameArea">
+            <div class="game-instructions" id="gameInstructions">
+                <span class="instruction-line">Try to catch the kiss! 💋</span>
+                <small class="instruction-sub">(It's a bit shy...)</small>
+            </div>
+            <svg class="kiss-lips" id="kissLips" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="lipGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff1493;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ff69b4;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M 50 30 Q 30 20 20 35 Q 15 45 25 55 L 50 70 L 75 55 Q 85 45 80 35 Q 70 20 50 30 Z" 
+                      fill="url(#lipGradient)" stroke="#ff1493" stroke-width="2"/>
+                <ellipse cx="35" cy="40" rx="3" ry="4" fill="#fff" opacity="0.6"/>
+                <ellipse cx="65" cy="40" rx="3" ry="4" fill="#fff" opacity="0.6"/>
+            </svg>
+        </div>
+
+        <!-- Kiss Meter (active only after catching the kiss) -->
+        <div class="meter-container meter-locked" id="meterContainer">
+            <div class="meter-title">💕 Kiss Charge Level 💕</div>
+            <div class="meter-wrapper">
+                <div class="meter-fill" id="meterFill"></div>
+                <div class="meter-text" id="meterText">0%</div>
+            </div>
+            <button class="charge-button" id="chargeButton">
+                Hold to Charge Love Energy! 💗
+            </button>
+        </div>
+    </div>
+
+    <!-- Grand Finale Overlay -->
+    <div class="finale-overlay" id="finaleOverlay">
+        <div class="finale-content">
+            <h2>💖 You Did It! 💖</h2>
+            <p>
+                Every kiss with you is magic. Every moment, a treasure. 
+                You light up my world in ways words can never capture. 
+                This Kiss Day, I want you to know that you are loved beyond measure.
+            </p>
+            <p class="finale-signature">Forever yours,<br>Your loving husband 💋</p>
+            <div class="finale-buttons-wrap">
+                <button type="button" class="redeem-button" id="redeemButton">
+                    💋 Redeem Your Real Kiss Now! 💋
+                </button>
+                <button type="button" class="play-again-button" id="playAgainButton">
+                    🔄 Play Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        const heartsContainer = document.querySelector('.hearts-container');
+        
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            const hearts = ['💖', '💕', '💗', '💝', '❤️'];
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 8 + 10}s`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 18000);
+        }
+
+        // Create initial hearts
+        for (let i = 0; i < 8; i++) {
+            createFloatingHeart();
+        }
+        
+        // Add hearts periodically
+        setInterval(createFloatingHeart, 3000);
+
+        // 3D Love Letter - mouse and touch
+        const scene = document.querySelector('.scene');
+        const loveLetter = document.getElementById('loveLetter');
+
+        function updateLetterTilt(clientX, clientY) {
+            const rect = scene.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 5;
+            const rotateY = (centerX - x) / 5;
+            loveLetter.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        scene.addEventListener('mousemove', (e) => { updateLetterTilt(e.clientX, e.clientY); });
+        scene.addEventListener('mouseleave', () => {
+            loveLetter.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+        scene.addEventListener('touchmove', (e) => {
+            if (e.touches.length) updateLetterTilt(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        scene.addEventListener('touchend', () => {
+            loveLetter.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+
+        // Catch the Kiss Game
+        const gameArea = document.getElementById('gameArea');
+        const kissLips = document.getElementById('kissLips');
+        const gameInstructions = document.getElementById('gameInstructions');
+        let kissPosition = { x: 0, y: 0 };
+        let hasBeenCaught = false;
+
+        function getKissSize() {
+            const r = kissLips.getBoundingClientRect();
+            return { w: r.width, h: r.height };
+        }
+
+        function centerKiss() {
+            const rect = gameArea.getBoundingClientRect();
+            const size = getKissSize();
+            kissPosition.x = Math.max(0, (rect.width - size.w) / 2);
+            kissPosition.y = Math.max(0, (rect.height - size.h) / 2);
+            updateKissPosition();
+        }
+
+        function updateKissPosition() {
+            kissLips.style.left = kissPosition.x + 'px';
+            kissLips.style.top = kissPosition.y + 'px';
+        }
+
+        centerKiss();
+        window.addEventListener('resize', () => {
+            if (!hasBeenCaught) centerKiss();
+        });
+
+        function fleeFromCursor(cursorX, cursorY) {
+            if (hasBeenCaught) return;
+            const size = getKissSize();
+            const kissCenterX = kissPosition.x + size.w / 2;
+            const kissCenterY = kissPosition.y + size.h / 2;
+            const distance = Math.sqrt(
+                Math.pow(cursorX - kissCenterX, 2) + Math.pow(cursorY - kissCenterY, 2)
+            );
+            const threshold = Math.min(120, Math.min(gameArea.offsetWidth, gameArea.offsetHeight) * 0.35);
+            if (distance < threshold) {
+                const angle = Math.atan2(kissCenterY - cursorY, kissCenterX - cursorX);
+                const fleeSpeed = 12;
+                const rect = gameArea.getBoundingClientRect();
+                let newX = kissPosition.x + Math.cos(angle) * fleeSpeed;
+                let newY = kissPosition.y + Math.sin(angle) * fleeSpeed;
+                newX = Math.max(0, Math.min(rect.width - size.w, newX));
+                newY = Math.max(0, Math.min(rect.height - size.h, newY));
+                kissPosition.x = newX;
+                kissPosition.y = newY;
+                updateKissPosition();
+            }
+        }
+
+        gameArea.addEventListener('mousemove', (e) => {
+            const rect = gameArea.getBoundingClientRect();
+            fleeFromCursor(e.clientX - rect.left, e.clientY - rect.top);
+        });
+        gameArea.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const rect = gameArea.getBoundingClientRect();
+            const t = e.touches[0];
+            fleeFromCursor(t.clientX - rect.left, t.clientY - rect.top);
+        }, { passive: false });
+
+        // Catch the kiss
+        function createConfetti(x, y) {
+            const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ffb6c1', '#ff85c1'];
+            const shapes = ['💖', '💕', '💗', '💝', '💋', '😘', '🥰', '❤️'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                const isEmoji = Math.random() > 0.5;
+                
+                if (isEmoji) {
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.fontSize = Math.random() * 20 + 20 + 'px';
+                } else {
+                    confetti.className = 'confetti';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 15 + 10 + 'px';
+                    confetti.style.height = confetti.style.width;
+                }
+                
+                confetti.style.position = 'fixed';
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '1000';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 200 + 100;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                document.body.appendChild(confetti);
+                
+                confetti.animate([
+                    { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty + 500}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], {
+                    duration: 2000 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)',
+                });
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function onKissCaught() {
+            if (hasBeenCaught) return;
+            hasBeenCaught = true;
+            const rect = kissLips.getBoundingClientRect();
+            createConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            gameInstructions.innerHTML = '<span class="instruction-line">🎉 You caught it! Now charge the meter below! 🎉</span>';
+            gameInstructions.style.animation = 'bounce 1s ease-in-out infinite';
+            document.getElementById('meterContainer').classList.remove('meter-locked');
+            kissLips.animate([
+                { transform: 'scale(1) rotate(0deg)', opacity: 1 },
+                { transform: 'scale(1.4) rotate(8deg)', opacity: 1 },
+                { transform: 'scale(1.4) rotate(-8deg)', opacity: 1 },
+                { transform: 'scale(1.8) rotate(0deg)', opacity: 0.9 },
+                { transform: 'scale(0)', opacity: 0 }
+            ], { duration: 900, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' });
+            setTimeout(() => { kissLips.style.display = 'none'; }, 900);
+        }
+
+        kissLips.addEventListener('click', (e) => { e.preventDefault(); onKissCaught(); });
+        kissLips.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            onKissCaught();
+        }, { passive: false });
+
+        // Kiss Meter Charging
+        const chargeButton = document.getElementById('chargeButton');
+        const meterFill = document.getElementById('meterFill');
+        const meterText = document.getElementById('meterText');
+        const finaleOverlay = document.getElementById('finaleOverlay');
+        let chargeLevel = 0;
+        let isCharging = false;
+        let chargeInterval;
+
+        function startCharging() {
+            if (!hasBeenCaught || isCharging || chargeLevel >= 100) return;
+            isCharging = true;
+            chargeButton.classList.add('charging');
+            document.body.classList.add('charging');
+            
+            chargeInterval = setInterval(() => {
+                chargeLevel += 2;
+                if (chargeLevel > 100) chargeLevel = 100;
+                meterFill.style.width = chargeLevel + '%';
+                meterText.textContent = Math.floor(chargeLevel) + '%';
+                
+                document.body.style.filter = `hue-rotate(${chargeLevel / 100 * 30}deg) saturate(${1 + chargeLevel / 100})`;
+                
+                if (chargeLevel >= 100) {
+                    stopCharging();
+                    triggerFinale();
+                }
+            }, 35);
+        }
+
+        function stopCharging() {
+            isCharging = false;
+            chargeButton.classList.remove('charging');
+            document.body.classList.remove('charging');
+            document.body.style.filter = '';
+            clearInterval(chargeInterval);
+        }
+
+        chargeButton.addEventListener('mousedown', startCharging);
+        chargeButton.addEventListener('mouseup', stopCharging);
+        chargeButton.addEventListener('mouseleave', stopCharging);
+        chargeButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startCharging();
+        }, { passive: false });
+        chargeButton.addEventListener('touchend', stopCharging);
+        chargeButton.addEventListener('touchcancel', stopCharging);
+
+        // Grand Finale
+        let heartRainInterval = null;
+
+        function triggerFinale() {
+            document.body.style.filter = 'none';
+            finaleOverlay.classList.add('finale-open');
+            heartRainInterval = setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-rain';
+                heart.textContent = ['💖', '💕', '💗', '💝', '❤️', '💋'][Math.floor(Math.random() * 6)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = '-50px';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 200);
+        }
+
+        function resetAll() {
+            if (heartRainInterval) {
+                clearInterval(heartRainInterval);
+                heartRainInterval = null;
+            }
+            finaleOverlay.classList.remove('finale-open');
+            chargeLevel = 0;
+            isCharging = false;
+            clearInterval(chargeInterval);
+            document.body.style.filter = '';
+            document.body.classList.remove('charging');
+            chargeButton.classList.remove('charging');
+            meterFill.style.width = '0%';
+            meterText.textContent = '0%';
+            hasBeenCaught = false;
+            document.getElementById('meterContainer').classList.add('meter-locked');
+            gameInstructions.innerHTML = '<span class="instruction-line">Try to catch the kiss! 💋</span><small class="instruction-sub">(It\'s a bit shy...)</small>';
+            gameInstructions.style.animation = 'pulse 2s ease-in-out infinite';
+            kissLips.style.display = '';
+            kissLips.style.transform = '';
+            kissLips.style.animation = 'wobble 1.5s ease-in-out infinite';
+            requestAnimationFrame(function() {
+                centerKiss();
+            });
+        }
+
+        const playAgainButton = document.getElementById('playAgainButton');
+        function handlePlayAgain(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            resetAll();
+        }
+        playAgainButton.addEventListener('click', handlePlayAgain);
+        playAgainButton.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            resetAll();
+        }, { passive: false });
+
+        const redeemButton = document.getElementById('redeemButton');
+        redeemButton.addEventListener('click', () => {
+            finaleOverlay.classList.remove('finale-open');
+            const alertDiv = document.createElement('div');
+            alertDiv.id = 'redeem-modal-overlay';
+            alertDiv.setAttribute('role', 'dialog');
+            alertDiv.setAttribute('aria-modal', 'true');
+            alertDiv.setAttribute('aria-label', 'Redeem your kiss');
+            alertDiv.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+            alertDiv.innerHTML = `
+                <div class="redeem-modal-inner" style="
+                    background: white;
+                    padding: clamp(24px, 5vw, 50px);
+                    border-radius: 24px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                    text-align: center;
+                    max-width: 90%;
+                    position: relative;
+                    z-index: 100001;
+                ">
+                    <div style="font-size: clamp(2.5rem, 8vw, 3rem); margin-bottom: 16px;">💋</div>
+                    <div style="font-size: clamp(1.4rem, 4vw, 2rem); color: #ff1493; font-family: 'Dancing Script', cursive; margin-bottom: 16px;">
+                        Come here and claim your kiss right now!
+                    </div>
+                    <div style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #ff69b4; margin-bottom: 24px;">
+                        I'm waiting... 😘💕
+                    </div>
+                    <button type="button" id="gotItBtn" class="redeem-close-btn" style="
+                        padding: 14px 36px;
+                        min-height: 48px;
+                        font-size: clamp(1rem, 2.5vw, 1.2rem);
+                        background: linear-gradient(135deg, #ff69b4, #ff1493);
+                        color: white;
+                        border: none;
+                        border-radius: 25px;
+                        cursor: pointer;
+                        font-family: 'Dancing Script', cursive;
+                        -webkit-tap-highlight-color: transparent;
+                    ">Got it! 😊</button>
+                </div>
+            `;
+            function closeRedeemModal() {
+                if (!alertDiv.parentNode || alertDiv.classList.contains('redeem-modal-closing')) return;
+                alertDiv.classList.add('redeem-modal-closing');
+                setTimeout(function() {
+                    if (alertDiv.parentNode) alertDiv.remove();
+                    resetAll();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 380);
+            }
+            document.body.appendChild(alertDiv);
+            const gotItBtn = alertDiv.querySelector('#gotItBtn');
+            if (gotItBtn) {
+                gotItBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeRedeemModal();
+                });
+                gotItBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeRedeemModal();
+                }, { passive: false });
+            }
+            alertDiv.addEventListener('click', function(e) {
+                if (e.target === alertDiv) closeRedeemModal();
+            });
+
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    createConfetti(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 30);
+            }
+        });
+    </script>
+</body>
+</html>
